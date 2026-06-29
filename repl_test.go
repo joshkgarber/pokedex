@@ -1,0 +1,42 @@
+package main
+
+import (
+	"testing"
+)
+
+func TestCleanInput(t *testing.T) {
+	cases := []struct {
+		input string
+		expected []string
+	}{
+		{
+			input: "     hello world    ",
+			expected: []string{"hello", "world"},
+		},
+		{
+			input: "     hello     world    ",
+			expected: []string{"hello", "world"},
+		},
+		{
+			input: "HeLLo WorLD",
+			expected: []string{"hello", "world"},
+		},
+	}
+
+	for _, c := range cases {
+		actual := cleanInput(c.input)
+		if len(actual) != len(c.expected) {
+			t.Errorf("Test failed: actual length %d != expected length %d", len(actual), len(c.expected))
+			t.Fail()		
+		}
+
+		for i:= range actual {
+			word := actual[i]
+			expectedWord := c.expected[i]
+			if word != expectedWord {
+				t.Errorf("Test failed: word %s != expected word %s", word, expectedWord)
+				t.Fail()		
+			}
+		}
+	}
+}
